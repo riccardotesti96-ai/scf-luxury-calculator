@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2575.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">// scf-exact-calculator.js</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// DATABASE FISSO DEI VEICOLI E LOCALITÀ</span></p>
+<p class="p1"><span class="s1">const SCF_DATABASE = {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>vehicles: {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>"lamborghini_urus": {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>name: "Lamborghini Urus",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>daily_price: 900,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>deposit: 10000,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>extra_km_price: 6.00,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>km_included_per_day: 150,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>photos: "https://drive.google.com/drive/folders/1igTZpUy2n6k5URIiO_maE6Yhh_jceAbo?usp=sharing"</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>"mercedes_g63": {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>name: "Mercedes G 63 AMG",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>daily_price: 675,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>deposit: 8000,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>extra_km_price: 5.00,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>km_included_per_day: 150,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>photos: ""</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>locations: {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>"milano_centro": {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>name: "Milano Centro",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>distance_km: 0,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>logistic_cost: 0</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>},</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>"monaco": {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>name: "Monaco",</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>distance_km: 303,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">      </span>logistic_cost: 424</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>}</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p1"><span class="s1">};</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// Funzione per calcolare i giorni tra due date</span></p>
+<p class="p1"><span class="s1">function calculateDays(deliveryDate, collectionDate) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const start = new Date(deliveryDate);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const end = new Date(collectionDate);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const diffTime = end - start;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return diffDays &gt; 0 ? diffDays : 0;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">// Funzione per calcolare il preventivo</span></p>
+<p class="p1"><span class="s1">function calculateQuote(vehicleId, deliveryDate, collectionDate, deliveryLocationId, collectionLocationId, estimatedKm) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const vehicle = SCF_DATABASE.vehicles[vehicleId];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const deliveryLoc = SCF_DATABASE.locations[deliveryLocationId];</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const collectionLoc = SCF_DATABASE.locations[collectionLocationId];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (!vehicle || !deliveryLoc || !collectionLoc) {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>throw new Error("Dati invalidi per calcolo");</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const days = calculateDays(deliveryDate, collectionDate);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (days === 0) throw new Error("Date non valide");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const rentalPrice = vehicle.daily_price * days;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>let logisticCost = 0;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (deliveryLocationId !== "milano_centro") logisticCost += deliveryLoc.logistic_cost;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>if (collectionLocationId !== "milano_centro" &amp;&amp; collectionLocationId !== deliveryLocationId) logisticCost += collectionLoc.logistic_cost;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>else if (collectionLocationId === deliveryLocationId &amp;&amp; deliveryLocationId !== "milano_centro") logisticCost = deliveryLoc.logistic_cost;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const totalIncludedKm = vehicle.km_included_per_day * days;</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const extraKm = Math.max(0, (estimatedKm || 0) - totalIncludedKm);</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const extraKmCost = extraKm * vehicle.extra_km_price;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>const totalPrice = rentalPrice + logisticCost + extraKmCost;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>return {</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>days,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>rentalPrice,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>logisticCost,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>extraKm,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>extraKmCost,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>totalPrice,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>deposit: vehicle.deposit,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>vehicleName: vehicle.name,</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">    </span>photos: vehicle.photos</span></p>
+<p class="p1"><span class="s1"><span class="Apple-converted-space">  </span>};</span></p>
+<p class="p1"><span class="s1">}</span></p>
+</body>
+</html>
